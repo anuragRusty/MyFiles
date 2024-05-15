@@ -2,6 +2,8 @@
   import {invoke} from "@tauri-apps/api";
   import Item from "./components/Item.svelte";
   import Search from "./components/Search.svelte";
+  import Nav from "./components/Nav.svelte";
+  import Roots from "./components/Roots.svelte";
 
   $: searchFile = "";
   $: currentPath = "home/name";
@@ -19,9 +21,13 @@ init();
 
 <main>
   <div class="tree">
+    <Roots/>
   </div>
   <div class="items">
-   <Search searchFile={searchFile} currentPath={currentPath}/>
+    <div class="navigations">
+     <Search searchFile={searchFile} currentPath={currentPath}/>
+     <Nav/>
+    </div>
     <div class="files-folders">
       {#each items as item}
         {#if !item.hidden}
@@ -36,9 +42,11 @@ init();
   .tree {
     position: sticky;
     top:0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     width: 160px;
     height: 100vh;
-    align-self: flex-start;
     background-color: #21242b;
   }
 
@@ -49,6 +57,16 @@ init();
     gap: 10px;
     flex-direction: column;
     align-items: center;
+  }
+
+  .navigations{
+    position: sticky;
+    top:0;
+    width: 100%;
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    background-color: #282c34;
   }
 
   .files-folders {

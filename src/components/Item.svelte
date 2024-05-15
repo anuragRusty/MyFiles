@@ -14,7 +14,7 @@ export let itemName;
 export let itemIcon;
 </script>
 
-<div class="item">
+<div class="item" draggable="true">
     <img src={icons[itemIcon]} alt="file" class="item-icon">
     <span class="item-name">{itemName}</span>
 </div>
@@ -26,6 +26,10 @@ export let itemIcon;
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+
+  .item:hover{
+    scale: 1.1;
   }
 
   .item-icon {

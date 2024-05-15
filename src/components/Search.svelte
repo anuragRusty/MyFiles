@@ -3,13 +3,13 @@
     export let currentPath;
 </script>
 
-<input class="search" type="text" bind:value={searchFile} placeholder={currentPath} />
+<input class="search" type="text" bind:value={searchFile} placeholder="&#128269;" />
 
 <style>
     .search {
     position: sticky;
     top:0;
-    height: 25px;
+    height: 24px;
     width: 360px;
     font-size: medium;
   }
