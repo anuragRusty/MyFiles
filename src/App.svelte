@@ -3,21 +3,28 @@
   import Item from "./components/Item.svelte";
   import Search from "./components/Search.svelte";
 
-  let searchFile = "";
-  let items = [1, 2, 3, 4, 5, 7, 8, 9, 10,11,12,13,15,17,18,19];
-  let currentPath = "home/name";
-  invoke("get_home_path").then((home) => currentPath = home);
+  $: searchFile = "";
+  $: currentPath = "home/name";
+  $: items = [];
 
+  async function init(){
+    await invoke("get_home_path").then(home => {
+     currentPath = home;
+     invoke("get_all_ff",{path:home}).then(list => items = list); 
+    })
+  }
+
+init();
 </script>
 
 <main>
   <div class="tree">
   </div>
   <div class="items">
-    <Search searchFile={searchFile} currentPath={currentPath}/>
+   <Search searchFile={searchFile} currentPath={currentPath}/>
     <div class="files-folders">
-      {#each items as itemName}
-        <Item itemName={itemName}/>
+      {#each items as item}
+        <Item itemName={item.name}/>
       {/each}
     </div>
   </div>
@@ -25,13 +32,16 @@
 
 <style>
   .tree {
-    display: flex;
+    position: sticky;
+    top:0;
     width: 160px;
+    height: 100vh;
+    align-self: flex-start;
     background-color: #21242b;
   }
 
   .items {
-    height: 100vh;
+    height: auto;
     width: 100%;
     display: flex;
     gap: 10px;

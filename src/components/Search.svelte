@@ -7,6 +7,8 @@
 
 <style>
     .search {
+    position: sticky;
+    top:0;
     height: 25px;
     width: 360px;
     font-size: medium;
