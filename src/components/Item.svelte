@@ -1,19 +1,27 @@
 <script>
+  import File from "/file.png";
+  import Folder from "/folder.png";
+
 //export let isFile;
 //export let itemType;
-//export let itemIcon;
+
+let icons = {
+   "File":File,
+   "Folder":Folder,
+}
+
 export let itemName;
+export let itemIcon;
 </script>
 
 <div class="item">
-    <div class="item-icon"></div>
-    <span class="item-name">File{itemName}</span>
+    <img src={icons[itemIcon]} alt="file" class="item-icon">
+    <span class="item-name">{itemName}</span>
 </div>
 
 <style>
   .item {
-    width: 84px;
-    margin: 8px 0% 0% 8px;
+    width: 72px;
     aspect-ratio: 1/1;
     display: flex;
     flex-direction: column;
@@ -21,9 +29,8 @@ export let itemName;
   }
 
   .item-icon {
-    border: 1px solid black;
-    width: 80%;
-    aspect-ratio: 1/1;
+    width: 64px;
+    height: 64px;
   }
 
   .item-name {

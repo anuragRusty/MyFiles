@@ -24,7 +24,9 @@ init();
    <Search searchFile={searchFile} currentPath={currentPath}/>
     <div class="files-folders">
       {#each items as item}
-        <Item itemName={item.name}/>
+        {#if !item.hidden}
+         <Item itemIcon={item.file_type} itemName={item.name}/>
+        {/if}
       {/each}
     </div>
   </div>
@@ -53,5 +55,6 @@ init();
     width: 100%;
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
   }
 </style>
