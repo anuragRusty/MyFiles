@@ -4,16 +4,33 @@
   import Search from "./components/Search.svelte";
   import Nav from "./components/Nav.svelte";
   import Roots from "./components/Roots.svelte";
-
+  
+  let HOME;
   $: searchFile = "";
-  $: currentPath = "home/name";
+  $: currentPath = HOME;
   $: items = [];
 
   async function init(){
     await invoke("get_home_path").then(home => {
-     currentPath = home;
+     HOME = home;
      invoke("get_all_ff",{path:home}).then(list => items = list); 
     })
+  }
+
+  async function open_folder(path,type){
+    if(type == "Folder"){
+       await invoke("get_all_ff",{path:path}).then(newItems => items = newItems);
+       currentPath = path;
+       console.log("OPENED_FOLDER")
+     }
+    }
+
+  function open_root(name){
+    if(name == "Home"){
+      init();
+    }else{
+      open_folder(HOME + "/" + name,"Folder");
+    }
   }
 
 init();
@@ -21,7 +38,7 @@ init();
 
 <main>
   <div class="tree">
-    <Roots/>
+    <Roots handClick={open_root}/>
   </div>
   <div class="items">
     <div class="navigations">
@@ -31,7 +48,7 @@ init();
     <div class="files-folders">
       {#each items as item}
         {#if !item.hidden}
-         <Item itemIcon={item.file_type} itemName={item.name}/>
+         <Item itemPath={item.path} itemIcon={item.file_type} itemName={item.name} handleDoubleClick={open_folder}/>
         {/if}
       {/each}
     </div>
@@ -73,6 +90,5 @@ init();
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
   }
 </style>

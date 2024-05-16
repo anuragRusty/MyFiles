@@ -1,4 +1,5 @@
 <script>
+  import { fade } from "svelte/transition";
   import File from "/file.png";
   import Folder from "/folder.png";
 
@@ -12,12 +13,14 @@ let icons = {
 
 export let itemName;
 export let itemIcon;
+export let itemPath;
+export let handleDoubleClick;
 </script>
 
-<div class="item" draggable="true">
+<button in:fade out:fade class="item" draggable="true" on:dblclick={() => handleDoubleClick(itemPath,itemIcon)}>
     <img src={icons[itemIcon]} alt="file" class="item-icon">
     <span class="item-name">{itemName}</span>
-</div>
+</button>
 
 <style>
   .item {
@@ -26,6 +29,9 @@ export let itemIcon;
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: transparent;
+    border: none;
+    color: #f2f2f2;
   }
 
   .item:hover{

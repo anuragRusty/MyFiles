@@ -27,6 +27,7 @@ impl FileTypes{
 #[derive(Clone,Debug,Deserialize,Serialize)]
 pub struct Item {
    name:String,
+   path:String,
    file_type:FileTypes,
    hidden:bool,
 }
@@ -45,7 +46,8 @@ fn get_all_ff(path: String) -> Vec<Item> {
           let file_type = FileTypes::get_file_type(&entry);
           let name = entry.file_name().to_str().unwrap().to_string();
           let hidden = name.chars().collect::<Vec<char>>()[0] == '.';
-          let item = Item{name,file_type,hidden};
+          let path = entry.path().to_str().unwrap().to_string();
+          let item = Item{name,path,file_type,hidden};
           list.push(item);
        }
      }
