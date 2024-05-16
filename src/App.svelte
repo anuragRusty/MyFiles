@@ -6,6 +6,9 @@
   import Roots from "./components/Roots.svelte";
   
   let HOME;
+  let undoStack = [];
+  let redoStack = [];
+
   $: searchFile = "";
   $: currentPath = HOME;
   $: items = [];
@@ -20,8 +23,8 @@
   async function open_folder(path,type){
     if(type == "Folder"){
        await invoke("get_all_ff",{path:path}).then(newItems => items = newItems);
+       undoStack.push(currentPath);
        currentPath = path;
-       console.log("OPENED_FOLDER")
      }
     }
 
@@ -29,8 +32,32 @@
     if(name == "Home"){
       init();
     }else{
-      open_folder(HOME + "/" + name,"Folder");
+      let path = HOME + "/" + name;
+      open_folder(path,"Folder");
     }
+  }
+
+  async function handleUndo(){
+    if(undoStack.length > 0){
+      let path = undoStack.pop();
+      await invoke("get_all_ff",{path:path}).then(newItems => items = newItems);
+      redoStack.push(currentPath);
+      currentPath = path;
+    }
+  }
+
+  function handleRedo(){
+    if(redoStack.length > 0){
+      let path = redoStack.pop();
+      open_folder(path,"Folder");
+    }
+  }
+
+  function trimFileName(name){
+    if(name.length > 12){
+      return name.slice(0,11) + "...";
+    }
+    return name;
   }
 
 init();
@@ -43,12 +70,12 @@ init();
   <div class="items">
     <div class="navigations">
      <Search searchFile={searchFile} currentPath={currentPath}/>
-     <Nav/>
+     <Nav handleBack={handleUndo}  handleUndo={handleRedo}/>
     </div>
     <div class="files-folders">
       {#each items as item}
         {#if !item.hidden}
-         <Item itemPath={item.path} itemIcon={item.file_type} itemName={item.name} handleDoubleClick={open_folder}/>
+         <Item itemSelected={item.selected} itemPath={item.path} itemIcon={item.file_type} itemName={trimFileName(item.name)} handleDoubleClick={open_folder}/>
         {/if}
       {/each}
     </div>
@@ -62,7 +89,7 @@ init();
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 160px;
+    width: 260px;
     height: 100vh;
     background-color: #21242b;
   }

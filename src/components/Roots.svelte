@@ -2,6 +2,7 @@
     export let handClick;
     let roots = [
      {name:"Home"},
+     {name:"Desktop"},
      {name:"Documents"},
      {name:"Downloads"},
      {name:"Music"},

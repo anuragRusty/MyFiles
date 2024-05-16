@@ -1,6 +1,11 @@
+<script>
+  export let handleBack;
+  export let handleUndo;
+</script>
+
 <div class="nav">
-  <button>&#x2190;</button>
-  <button>&#x2192;</button>
+  <button on:click={() => handleBack()}>&#x2190;</button>
+  <button on:click={() => handleUndo()}>&#x2192;</button>
 </div>
 
 <style>

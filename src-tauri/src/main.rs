@@ -1,10 +1,8 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 use std::fs::DirEntry;
-
 use homedir::get_my_home;
 use serde::{Deserialize, Serialize};
-use serde_json::map::Entry;
 
 #[derive(Clone,Debug,Deserialize,Serialize)]
 pub enum FileTypes{
@@ -29,6 +27,7 @@ pub struct Item {
    name:String,
    path:String,
    file_type:FileTypes,
+   selected:bool,
    hidden:bool,
 }
 
@@ -47,7 +46,7 @@ fn get_all_ff(path: String) -> Vec<Item> {
           let name = entry.file_name().to_str().unwrap().to_string();
           let hidden = name.chars().collect::<Vec<char>>()[0] == '.';
           let path = entry.path().to_str().unwrap().to_string();
-          let item = Item{name,path,file_type,hidden};
+          let item = Item{name,path,file_type,selected:false,hidden};
           list.push(item);
        }
      }

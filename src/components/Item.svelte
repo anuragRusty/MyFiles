@@ -14,12 +14,13 @@ let icons = {
 export let itemName;
 export let itemIcon;
 export let itemPath;
+export let itemSelected;
 export let handleDoubleClick;
 </script>
 
-<button in:fade out:fade class="item" draggable="true" on:dblclick={() => handleDoubleClick(itemPath,itemIcon)}>
-    <img src={icons[itemIcon]} alt="file" class="item-icon">
-    <span class="item-name">{itemName}</span>
+<button in:fade  class="item" draggable="true" on:dblclick={() => {handleDoubleClick(itemPath,itemIcon)}} on:click={() => itemSelected = !itemSelected}>
+    <img class:selected-icon={itemSelected} src={icons[itemIcon]} alt="file" class="item-icon">
+    <span class:selected-text={itemSelected} class="item-name">{itemName}</span>
 </button>
 
 <style>
@@ -46,5 +47,10 @@ export let handleDoubleClick;
   .item-name {
     text-align: center;
     font-size: small;
+  }
+
+  .selected-text{
+    background-color: skyblue;
+    color:black;
   }
 </style>
