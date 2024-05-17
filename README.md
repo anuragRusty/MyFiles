@@ -1,6 +1,10 @@
+
 # MyFiles
 
 MyFiles is a file manager application built with modern web technologies and integrated seamlessly into your desktop environment using Tauri.
+
+## Preview 
+![Screenshot](https://i.ibb.co/yXDLkLy/Screenshot-from-2024-05-17-20-30-01.png)
 
 ## Features
 
@@ -18,12 +22,10 @@ MyFiles is a file manager application built with modern web technologies and int
 
 This project is currently under development. The core functionalities are implemented, but further features and improvements are planned.
 
-## Preview 
-![Screenshot](https://i.ibb.co/PNRBWBh/Screenshot-from-2024-05-17-20-30-01.png)
-
 ## Installation
 
 **Prerequisites:**
 
 * Rust (latest stable version)
 * Node.js and npm (or yarn)
+
