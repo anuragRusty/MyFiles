@@ -28,7 +28,7 @@
      }
     }
 
-  function open_root(name){
+  async function open_root(name){
     if(name == "Home"){
       init();
     }else{
@@ -46,7 +46,7 @@
     }
   }
 
-  function handleRedo(){
+  async function handleRedo(){
     if(redoStack.length > 0){
       let path = redoStack.pop();
       open_folder(path,"Folder");
